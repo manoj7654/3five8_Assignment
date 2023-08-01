@@ -2,24 +2,21 @@
 const express=require("express")
 const app=express()
 
-// importing connection for running server and connecting to database
-const {connection}=require("./config/db")
-
 // importing dotenv for accessing data from .env file
 require("dotenv").config()
 
 
-// importing user router 
+// importing cors 
+const cors=require("cors")
 
-
-
-
+// importing booking router 
+const { bookingRouter }=require("./routes/bookingRouter")
 
 
 // middleware 
 app.use(express.json())
 
-
+app.use(cors())
 
 // basic enpoint of this api
 app.get("/",(req,res)=>{
@@ -28,16 +25,11 @@ app.get("/",(req,res)=>{
 
 
 // making api request
-
+app.use("/",bookingRouter)
 
 
 // app is listening here on specific port no
-app.listen(process.env.port,async()=>{
-    try {
-        await connection;
-        console.log("Connected to Database Successfully")
-    } catch (error) {
-        console.log("Getting error while connection to database")
-    }
+app.listen(process.env.port,()=>{
+    
     console.log(`Server is listening on port no ${process.env.port}`)
 })

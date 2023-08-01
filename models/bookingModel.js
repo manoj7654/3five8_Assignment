@@ -1,18 +1,22 @@
-// importing mongoose for creating bookingSchema and model
-const mongoose = require('mongoose');
 
-// bookingSchema
-const bookingSchema = new mongoose.Schema({
-  facility: { type: String, required: true },
-  date: { type: Date, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, required: true },
-  status:{type:Boolean,required:true},
-  amount: { type: Number},
-});
+const bookings = [];
 
-// booking model
-const BookingModel = mongoose.model('bookings', bookingSchema);
+//  creating function and returning all the data which are booked
+function getBookings() {
+  return bookings;
+}
 
-// exporting bookingmodel
-module.exports = {BookingModel};
+//  creating function add pushing all the newly created bookings
+function addBooking(ele) {
+  bookings.push(ele);
+
+}
+
+// console.log(bookings)
+
+
+// exporting these function for making api requrestt
+module.exports = {
+  getBookings,
+  addBooking,
+};
