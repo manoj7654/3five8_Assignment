@@ -1,5 +1,5 @@
 // importing getBookings and addBookings function for adding newly booking and finding previous booking
-const { getBookings, addBooking } = require('../../models/bookingModel');
+const { getBookings, addBooking } = require('../models/bookingModel');
 
 
 // for finding time difference
@@ -59,8 +59,6 @@ const bookingFacility = (req, res) => {
 //  for tennis court finding amount
     if(facility=="Tennis Court"){
         Amount+=timeDifference(startTime,endTime)*50
-      
-    
     }
    
  

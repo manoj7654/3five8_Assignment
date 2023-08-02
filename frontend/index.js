@@ -68,7 +68,7 @@ endTimeInput.addEventListener('change', updateAmount);
     endTime
   }
 
-  const result = await fetch('http://localhost:8080/book', {
+  const result = await fetch('https://black-ostrich-hose.cyclic.cloud/book', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

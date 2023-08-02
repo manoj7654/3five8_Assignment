@@ -9,7 +9,6 @@ function getBookings() {
 //  creating function add pushing all the newly created bookings
 function addBooking(ele) {
   bookings.push(ele);
-
 }
 
 // console.log(bookings)
