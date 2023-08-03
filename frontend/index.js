@@ -55,11 +55,22 @@ endTimeInput.addEventListener('change', updateAmount);
 
    bookingForm.addEventListener('submit', async (e) => {
    e.preventDefault();
-   
+
    const facility=document.getElementById("facility").value;
    const date=document.getElementById("date").value;
    const startTime=startTimeInput.value;
    const endTime=endTimeInput.value;
+
+// for loader
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.classList.add("loading");
+
+setTimeout(() => {
+  // Once the process is complete, remove the loading class
+  submitBtn.classList.remove("loading");
+  
+  
+}, 2000); // Simulating a 2-second delay. Replace this with your actual async process.
 
   let obj={
     facility,
@@ -68,7 +79,7 @@ endTimeInput.addEventListener('change', updateAmount);
     endTime
   }
 
-  const result = await fetch('https://black-ostrich-hose.cyclic.cloud/book', {
+  const result = await fetch('https://facilitybooking-rxhl.onrender.com/book', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
