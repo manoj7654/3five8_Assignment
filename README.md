@@ -14,7 +14,7 @@
  * Response : Booking successfull and amount if already not booked other wise it will say Booking failed, alredy booked
 
 ## Back-End depoyment
-[Live](https://black-ostrich-hose.cyclic.cloud/)
+[Live](https://facilitybooking-rxhl.onrender.com)
 
 
 ## Front-End deployment
