@@ -1,9 +1,9 @@
+
+
 // importing getBookings and addBookings function for adding newly booking and finding previous booking
 const { getBookings, addBooking } = require('../models/bookingModel');
 
-
 // for finding time difference
-
 const timeDifference=(startTime,endTime)=>{
   const [hour1,minutes1]=startTime.split(":").map(Number)
   const [hour2,minutes2]=endTime.split(":").map(Number);
@@ -23,7 +23,6 @@ return differenceInHours;
 
 }
 
-
 // creating new booking facility
 const bookingFacility = (req, res) => {
   try {
@@ -40,46 +39,70 @@ const bookingFacility = (req, res) => {
       );
     });
 
-    // if already booked then return a message 
+    // if already booked then return a message
     if (alreadyBooking) {
       return res.status(400).json({ message: 'Booking Failed,Already Booked' });
     }
-    
-    let Amount=0;
+
+    let Amount = 0;
     //  for clubhouse finding amount
-    if(facility=="Clubhouse"){
-      if(startTime>="10:00"&& endTime<="16:00"){
-        Amount+=timeDifference(startTime,endTime)*100
-      }else if(startTime>="16:00"&& endTime<="22:00"){
-        Amount+=timeDifference(startTime,endTime)*500
-        
+    if (facility == 'Clubhouse') {
+      if (startTime >= '10:00' && endTime <= '16:00') {
+        Amount += timeDifference(startTime, endTime) * 100;
+      } else if (startTime >= '16:00' && endTime <= '22:00') {
+        Amount += timeDifference(startTime, endTime) * 500;
       }
     }
 
-//  for tennis court finding amount
-    if(facility=="Tennis Court"){
-        Amount+=timeDifference(startTime,endTime)*50
+    //  for tennis court finding amount
+    if (facility == 'Tennis Court') {
+      Amount += timeDifference(startTime, endTime) * 50;
     }
-   
- 
+
     // creating new bookings
     const newBooking = {
       facility,
       date,
       startTime,
       endTime,
-      Amount
+      Amount,
     };
 
+    // Add booking slots and details to the facility object
+    const bookings = getBookings();
+    const timeSlots = bookings[facility] || [];
+
+    for (let i = 0; i < timeSlots.length; i++) {
+      const slotStartTime = timeSlots[i].startTime;
+      const slotEndTime = timeSlots[i].endTime;
+      const isBooked =
+        (startTime >= slotStartTime && startTime < slotEndTime) ||
+        (endTime > slotStartTime && endTime <= slotEndTime) ||
+        (startTime <= slotStartTime && endTime >= slotEndTime);
+
+      if (isBooked) {
+        return res.status(400).json({ message: 'Booking Failed, Slot Already Booked' });
+      }
+    }
+
+    timeSlots.push({
+      slot: `${startTime}-${endTime}`,
+      bookingDetails: newBooking,
+    });
+
+    bookings[facility] = timeSlots;
     addBooking(newBooking);
-    console.log(newBooking)
+    console.log(timeSlots)
+    console.log(newBooking);
     return res.status(200).json({ message: 'Booked', Amount });
   } catch (error) {
     return res.status(500).json({ message: 'Booking Failed' });
   }
 };
 
-//  exporting 
+//  exporting
 module.exports = {
-    bookingFacility,
+  bookingFacility,
 };
+
+
