@@ -18,7 +18,7 @@
 
 
 ## Front-End deployment
-[Live](https://64ca31627206d606371b9e93--glistening-treacle-639a22.netlify.app/)
+[Live](https://glistening-treacle-639a22.netlify.app/)
 
 ## Presentation Vidoe
 [Demo](https://drive.google.com/file/d/10-hpa4GQYE6OO2phPwmZCIwFFy8Q8ShR/view?usp=sharing)
